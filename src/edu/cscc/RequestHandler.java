@@ -3,13 +3,32 @@ package edu.cscc;
 import java.io.*;
 import java.net.Socket;
 
+/**
+ * RequestHandler: process request fom browser
+ *
+ * @author Kate Stifle; Mark Martin
+ * @version 1.0
+ * @since 2019-11-25
+ */
 public class RequestHandler {
+    /**
+     * Create field for connection.
+     */
     private Socket connection;
 
+    /**
+     * Constructor
+     *
+     * @param connection instance
+     */
     public RequestHandler(Socket connection) {
         this.connection = connection;
     }
 
+    /**
+     * This method process the request.
+     *
+     */
     public void processRequest() {
         try {
             String httpRequest = readRequest();
@@ -31,6 +50,11 @@ public class RequestHandler {
         }
     }
 
+    /**
+     * This method reads the HTTP request from the socket and returns a string containing the request.
+     * @return request in String format
+     * @throws IOException
+     */
     private String readRequest() throws IOException {
         // Set socket timeout to 500 milliseconds
         connection.setSoTimeout(0);

@@ -4,19 +4,36 @@ import java.io.*;
 import java.net.*;
 import java.nio.file.Files;
 
+/**
+ * Response Handler processes resonse back to web server.
+ *
+ * @author Kate Stifle; Mark Martin
+ * @version 1.0
+ * @since 2019-11-25
+ */
 public class ResponseHandler {
+
+    /**
+     * File not found response
+     */
     private static final String NOT_FOUND_RESPONSE =
             "HTTP/1.0 404 NotFound\n" +
                     "Server: TinyWS\n" +
                     "Content-type: text/plain\n\n" +
                     "Requested file not found.";
 
+    /**
+     * Request not allowed
+     */
     private static final String FORBIDDEN_RESPONSE =
             "HTTP/1.0 403 Forbidden\n" +
                     "Server: TinyWS\n" +
                     "Content-type: text/plain\n\n" +
                     "Requested action is forbidden.  So there!";
 
+    /**
+     * Response for good request
+     */
     private static final String HTTP_OK_HEADER =
             "HTTP/1.0 200 OK\n" +
                     "Server: TinyWS\n" +
@@ -25,6 +42,11 @@ public class ResponseHandler {
     private HTTPRequest request;
     private int responseCode;
 
+    /**
+     * Constructor
+     *
+     * @param request http request
+     */
     public ResponseHandler(HTTPRequest request) {
         this.request = request;
         responseCode = 404;
@@ -32,6 +54,9 @@ public class ResponseHandler {
 
     /**
      * Send HTTP Response
+     *
+     * @param connection request
+     * @throws IOException  on read error
      */
     public void sendResponse(Socket connection) throws IOException {
         byte[] response = null;
@@ -46,7 +71,13 @@ public class ResponseHandler {
        }
 }
 
-    // Find requested file, assume Document Root is in html folder in project directory
+    /**
+     * Find requested file, assume Document Root is in html folder in project directory
+     *
+     * @param path file path
+     * @return path or null depending on condition
+     * @throws IOException on file read error
+     */
     private byte[] getFile(String path) throws IOException {
         if (path==null) {
             responseCode = 404;
@@ -98,8 +129,14 @@ public class ResponseHandler {
        }
     }
 
-    // Read file, return byte array (null if error)
-    private byte[] readFile(File f) throws IOException{
+    /**
+     * Read file, return byte array (null if error)
+     *
+     * @param f
+     * @return byte array or error
+     * @throws IOException on read error
+     */
+     private byte[] readFile(File f) throws IOException{
         FileInputStream fileIn = null;
         int fileLength = Math.toIntExact(f.length());
         byte[] fileContent = new byte[fileLength];
@@ -115,7 +152,12 @@ public class ResponseHandler {
         return(fileContent);
     }
 
-    // Return mimetype based on file suffix (or null if error)
+    /**
+     * Return mimetype based on file suffix (or null if error)
+     *
+     * @param path file path
+     * @return mime type or error
+     */
     private String getMimeType(String path) {
         String mimeType = null;
         if (path.endsWith(".html") || path.endsWith(".htm")) {

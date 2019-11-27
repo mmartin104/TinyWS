@@ -7,7 +7,10 @@ import java.net.Socket;
 
 /**
  * TinyWS a simplistic Tiny Web Server
- * @author student name here
+ *
+ * @author Kate Stifle; Mark Martin
+ * @version 1.0
+ * @since 2019-11-25
  */
 public class TinyWS {
 
@@ -15,11 +18,21 @@ public class TinyWS {
     private static String defaultFolder;
     private static String defaultPage;
 
+    /**
+     * Main method
+     *
+     * @param args Unused.
+     */
     public static void main(String[] args) {
         TinyWS tiny = new TinyWS();
         tiny.listen();
     }
 
+    /**
+     * Configures port
+     *
+     * @throws NumberFormatException when invalid port
+     */
     public TinyWS() {
         Config config = new Config();
         String portValue = config.getProperty(Config.PORT);
@@ -35,6 +48,10 @@ public class TinyWS {
         config.dumpProperties();
     }
 
+    /**
+     * Listens for request from web browser
+     *
+     */
     public void listen() {
         try {
             ServerSocket socket = new ServerSocket(port);
@@ -54,6 +71,7 @@ public class TinyWS {
 
     /**
      * Log web server requests
+     *
      * @param s - message to log
      */
     public static void log(String s) {
@@ -62,6 +80,8 @@ public class TinyWS {
 
     /**
      * Handle fatal error - print info and die
+     *
+     * @param s log message
      */
     public static void fatalError(String s) {
         handleError(s, null, true);
@@ -69,6 +89,8 @@ public class TinyWS {
 
     /**
      * Handle fatal error - print info and die
+     *
+     * @param e log message
      */
     public static void fatalError(Exception e) {
         handleError(null, e, true);
@@ -76,6 +98,10 @@ public class TinyWS {
 
     /**
      * Handle fatal / non-fatal errors
+     *
+     * @param s log message
+     * @param e info for log message
+     * @param isFatal error condition
      */
     public static void handleError(String s, Exception e, boolean isFatal) {
         if (s != null) {
