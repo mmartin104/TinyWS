@@ -41,8 +41,7 @@ public class TinyWS {
             socket.setSoTimeout(0);
                 while (true) {
                 Socket connection = socket.accept();
-                System.out.print("Request from: ");
-                TinyWS.log(connection.getInetAddress().getCanonicalHostName());
+                TinyWS.log("Request from: " + connection.getInetAddress().getCanonicalHostName());
                 RequestHandler requestHandler = new RequestHandler(connection);
                 requestHandler.processRequest();
                 connection.close();

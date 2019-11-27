@@ -41,7 +41,7 @@ public class ResponseHandler {
        if (request.isValidRequest() == true) {
            out.write(getFile(request.getPath()));
            out.flush();
-           System.out.println("Close connection");
+           TinyWS.log("Close connection");
            out.close();
        }
 }
@@ -93,7 +93,7 @@ public class ResponseHandler {
            finalArray = fileData;
            responseCode = 200;
 
-           System.out.println("\tGot file: " + path + " (" + file.length() + " bytes)");
+           TinyWS.log("\tGot file: " + path + " (" + file.length() + " bytes)");
            return finalArray;
        }
     }

@@ -11,6 +11,7 @@ public class HTTPRequest {
         if (!parse(r)) {
             TinyWS.log(r);
             TinyWS.fatalError(r);
+            validRequest = false;
         } else {
             validRequest = true;
         }
